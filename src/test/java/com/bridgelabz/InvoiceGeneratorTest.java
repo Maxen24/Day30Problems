@@ -44,6 +44,7 @@ public class InvoiceGeneratorTest {
         InvoiceSummary expectedSummary = new InvoiceSummary(2, 30.0);
         Assert.assertEquals(expectedSummary, invoiceSummary);
     }
+
     //UC-4 Given a user id, the Invoice Service gets the list
     // of rides from the RideRepository, and returns the invoice.
     @Test
@@ -63,5 +64,31 @@ public class InvoiceGeneratorTest {
         InvoiceSummary expectedSummary = new InvoiceSummary(2, 30.0);
         Assert.assertEquals(expectedSummary, invoiceSummary);
     }
+        // UC-5 Premium Rides (Bonus)
+        // The Cab Agency now supports 2 categories of rides:
+        // Normal Rides: Rs 10 per km, Rs 1 per minute, Minimum fare of Rs 5
+        // Premium Rides: Rs 15 per km, Rs 2 per minute, Minimum fare of Rs 20
+    @Test
+    public void givenMultipleRides_whenGivenWithCategories_shouldReturnInvoiceAccordingToType() {
+
+        InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
+        Rides[] rides = {new Rides(2.0, 5), new Rides(5.0, 8)};
+
+
+        String category = "Premium";
+
+        if (category == "Premium") {
+            PremiumRides premiumInvoice = new PremiumRides();
+
+            InvoiceSummary premiumInvoiceSummary = premiumInvoice.calculateFare(rides);
+            InvoiceSummary expectedPremiumInvoiceSummary = new InvoiceSummary(2, 131.0);
+            Assert.assertEquals(expectedPremiumInvoiceSummary, premiumInvoiceSummary);
+        } else {
+            InvoiceSummary invoiceSummary = invoiceGenerator.calculateFare(rides);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
+            Assert.assertEquals(expectedInvoiceSummary, invoiceSummary);
+        }
+    }
 }
+
 
