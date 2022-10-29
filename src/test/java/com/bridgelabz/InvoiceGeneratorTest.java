@@ -27,16 +27,19 @@ public class InvoiceGeneratorTest {
         Assert.assertEquals(5,fare,0.0);
     }
 
-    // UC-2 Multiple Rides
-    // The Invoice Generator should now take in multiple rides,and calculate the aggregate
-    // total for all
+    // UC-3 Enhanced Invoice
+    // The Invoice Generator should now return the following as part of the invoice -
+    // Total Number of Rides
+    // Total Fare
+    // Average Fare Per Ride
+
     @Test
-    public void givenDistanceAndTime_shouldReturnTotalFareCalculate(){
+    public void givenDistanceAndTime_shouldReturnInvoiceSummary(){
         InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
         Rides[] rides = { new Rides(2.0, 5), new Rides(0.1, 1) };
-        double fare = invoiceGenerator.calculateFare(rides);
-        Assert.assertEquals(30, fare,0.0);
+        InvoiceSummary invoiceSummary = invoiceGenerator.calculateFare(rides);
+        InvoiceSummary expectedSummary = new InvoiceSummary(2,30.0);
+        Assert.assertEquals(expectedSummary,invoiceSummary);
     }
-
 }
 
