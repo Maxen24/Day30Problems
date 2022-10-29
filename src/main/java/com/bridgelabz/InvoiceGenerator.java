@@ -16,4 +16,13 @@ public class InvoiceGenerator {
             return MIN_FARE;
         return totalFare;
     }
+    // UC-2 Multiple Rides
+    // The Invoice Generator should now take in multiple rides,and calculate the aggregate
+    // total for all
+    public double calculateFare(Rides[] rides) {
+        double totalFare = 0;
+        for (Rides ride:rides)
+            totalFare += this.calculateFare(ride.distance, ride.time);
+        return totalFare;
+    }
 }
